@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+
+
+body {
+  font-family: "Link Sans", Arial, sans-serif;
+  background-color: #05080d;
+}
+
+
+@keyframes slowFloat {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-60px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.animate-slowFloat {
+  animation: slowFloat 14s ease-in-out infinite;
+}
