@@ -2,19 +2,19 @@ export default function StepBasic({ data, setData }) {
   const { basicProfile } = data;
 
   return (
-    <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 md:p-8">
+    <div className="bg-white border border-gray-200 rounded-xl p-6 md:p-8 shadow-sm">
 
       {/* TITLE */}
-      <h2 className="text-2xl md:text-3xl font-bold text-white">
+      <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
         Basic Profile
       </h2>
-      <p className="mt-2 text-gray-400 text-sm md:text-base">
+      <p className="mt-2 text-gray-500 text-sm md:text-base">
         Tell us about yourself so we can personalize your AI clone
       </p>
 
       {/* FULL NAME */}
       <div className="mt-6">
-        <label className="block text-sm text-gray-300 mb-2">
+        <label className="block text-sm font-medium text-gray-700 mb-2">
           Full Name
         </label>
         <input
@@ -30,13 +30,13 @@ export default function StepBasic({ data, setData }) {
               },
             })
           }
-          className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg outline-none text-white"
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
         />
       </div>
 
       {/* NICHE */}
       <div className="mt-5">
-        <label className="block text-sm text-gray-300 mb-2">
+        <label className="block text-sm font-medium text-gray-700 mb-2">
           Primary Niche / Content Category
         </label>
         <select
@@ -50,7 +50,7 @@ export default function StepBasic({ data, setData }) {
               },
             })
           }
-          className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg outline-none text-white"
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
         >
           <option value="">Select your niche</option>
           <option>Fashion</option>
@@ -67,7 +67,7 @@ export default function StepBasic({ data, setData }) {
 
       {/* LANGUAGE */}
       <div className="mt-5">
-        <label className="block text-sm text-gray-300 mb-2">
+        <label className="block text-sm font-medium text-gray-700 mb-2">
           Content Language
         </label>
         <select
@@ -81,7 +81,7 @@ export default function StepBasic({ data, setData }) {
               },
             })
           }
-          className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg outline-none text-white"
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
         >
           <option value="">Select language</option>
           <option>English</option>
@@ -96,7 +96,7 @@ export default function StepBasic({ data, setData }) {
 
       {/* COLLAB OPEN */}
       <div className="mt-6">
-        <label className="block text-sm text-gray-300 mb-3">
+        <label className="block text-sm font-medium text-gray-700 mb-3">
           Are you open to collaborations from all locations?
         </label>
 
@@ -114,8 +114,8 @@ export default function StepBasic({ data, setData }) {
             }
             className={`flex-1 py-3 rounded-lg border transition ${
               basicProfile.openToCollab === "yes"
-                ? "border-green-400 bg-green-400/10 text-green-400"
-                : "border-white/20 text-gray-300 hover:bg-white/5"
+                ? "border-indigo-600 bg-indigo-50 text-indigo-600"
+                : "border-gray-300 text-gray-600 hover:bg-gray-50"
             }`}
           >
             Yes
@@ -134,8 +134,8 @@ export default function StepBasic({ data, setData }) {
             }
             className={`flex-1 py-3 rounded-lg border transition ${
               basicProfile.openToCollab === "no"
-                ? "border-green-400 bg-green-400/10 text-green-400"
-                : "border-white/20 text-gray-300 hover:bg-white/5"
+                ? "border-indigo-600 bg-indigo-50 text-indigo-600"
+                : "border-gray-300 text-gray-600 hover:bg-gray-50"
             }`}
           >
             No

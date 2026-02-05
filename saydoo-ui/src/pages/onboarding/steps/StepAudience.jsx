@@ -12,19 +12,19 @@ export default function StepAudience({ data, setData }) {
   };
 
   return (
-    <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 md:p-8">
+    <div className="bg-white border border-gray-200 rounded-xl p-6 md:p-8 shadow-sm">
 
       {/* TITLE */}
-      <h2 className="text-2xl md:text-3xl font-bold text-white">
+      <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
         Audience Details
       </h2>
-      <p className="mt-2 text-gray-400 text-sm md:text-base">
+      <p className="mt-2 text-gray-500 text-sm md:text-base">
         Help brands understand your audience better
       </p>
 
       {/* AGE GROUP */}
       <div className="mt-6">
-        <p className="text-sm text-gray-300 mb-3">
+        <p className="text-sm font-medium text-gray-700 mb-3">
           Who is your primary audience age group?
         </p>
 
@@ -36,8 +36,8 @@ export default function StepAudience({ data, setData }) {
               onClick={() => updateAudience("ageGroup", age)}
               className={`py-2.5 rounded-lg border transition ${
                 audience.ageGroup === age
-                  ? "border-green-400 bg-green-400/10 text-green-400"
-                  : "border-white/20 text-gray-300 hover:bg-white/5"
+                  ? "border-indigo-600 bg-indigo-50 text-indigo-600"
+                  : "border-gray-300 text-gray-600 hover:bg-gray-50"
               }`}
             >
               {age}
@@ -48,7 +48,7 @@ export default function StepAudience({ data, setData }) {
 
       {/* GENDER SPLIT */}
       <div className="mt-8">
-        <p className="text-sm text-gray-300 mb-3">
+        <p className="text-sm font-medium text-gray-700 mb-3">
           Audience gender split (if known)
         </p>
 
@@ -57,49 +57,41 @@ export default function StepAudience({ data, setData }) {
             type="text"
             placeholder="Male % (e.g. 60%)"
             value={audience.male || ""}
-            onChange={(e) =>
-              updateAudience("male", e.target.value)
-            }
-            className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg outline-none text-white"
+            onChange={(e) => updateAudience("male", e.target.value)}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
           />
 
           <input
             type="text"
             placeholder="Female % (e.g. 35%)"
             value={audience.female || ""}
-            onChange={(e) =>
-              updateAudience("female", e.target.value)
-            }
-            className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg outline-none text-white"
+            onChange={(e) => updateAudience("female", e.target.value)}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
           />
 
           <input
             type="text"
             placeholder="Other % (optional)"
             value={audience.other || ""}
-            onChange={(e) =>
-              updateAudience("other", e.target.value)
-            }
-            className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg outline-none text-white"
+            onChange={(e) => updateAudience("other", e.target.value)}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
           />
         </div>
       </div>
 
       {/* GEOGRAPHY */}
       <div className="mt-8">
-        <label className="block text-sm text-gray-300 mb-2">
+        <label className="block text-sm font-medium text-gray-700 mb-2">
           Audience geography (top locations)
         </label>
         <input
           type="text"
           placeholder="e.g. India, USA, UK"
           value={audience.geography || ""}
-          onChange={(e) =>
-            updateAudience("geography", e.target.value)
-          }
-          className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg outline-none text-white"
+          onChange={(e) => updateAudience("geography", e.target.value)}
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
         />
-        <p className="mt-2 text-xs text-gray-500">
+        <p className="mt-2 text-xs text-gray-400">
           Separate multiple locations with commas
         </p>
       </div>

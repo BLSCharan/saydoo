@@ -1,53 +1,71 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-import StepIndicator from "./StepIndicator";
-import StepBasic from "./steps/StepBasic";
-import StepSocial from "./steps/StepSocial";
-import StepAudience from "./steps/StepAudience";
-import StepBrands from "./steps/StepBrands";
-import StepContent from "./steps/StepContent";
-import StepPricing from "./steps/StepPricing";
-import roleImg from "../../assets/login-role.jpg";
-import bg from "../../assets/bg-role.png";
+import StepIndicator from "./StepIndicatorInvestor";
+import StepIdentity from "./steps/StepIdentity";
+import StepFocus from "./steps/StepFocus";
+import StepPitch from "./steps/StepPitch";
+import StepAIBehavior from "./steps/StepAIBehavior";
+import StepMeetings from "./steps/StepMeetings";
+import StepGuidance from "./steps/StepGuidance";
+import roleImg from "../../assets/login-i.jpg";
+import bg from "../../assets/bg-role1.png";
 
-export default function InfluencerOnboarding() {
+export default function InvestorOnboarding() {
   const [step, setStep] = useState(1);
   const scrollRef = useRef(null);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    basicProfile: {
-      fullName: "",
-      niche: "",
-      language: "",
-      openToCollab: "",
+    identity: {
+      name: "",
+      type: "",
+      location: "",
     },
-    social: {},
-    audience: {},
-    brands: {},
-    content: { links: [] },
-    pricing: {},
+    focus: {
+      industries: [],
+      stage: "",
+      ticketRange: "",
+      geography: "",
+    },
+    pitch: {
+      allowedFormats: [],
+      maxDeckSize: "",
+      maxVideoDuration: "",
+      evaluationFactors: [],
+      avoid: "",
+      minimumExpectations: "",
+    },
+    aiBehavior: {
+      autoFilter: true,
+      followUpQuestions: true,
+      summaryFormat: "text",
+    },
+    meetings: {
+      allowMeetings: true,
+      types: ["15", "30"],
+      paid: false,
+    },
+    guidance: {
+      exciteNote: "",
+      avoidNote: "",
+    },
   });
 
   const next = () => setStep((s) => Math.min(s + 1, 6));
   const back = () => setStep((s) => Math.max(s - 1, 1));
 
-  // Reset scroll on step change
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTo({ top: 0, behavior: "smooth" });
-    }
+    if (scrollRef.current) scrollRef.current.scrollTo({ top: 0, behavior: "smooth" });
   }, [step]);
 
   const handleFinish = () => {
-    localStorage.setItem("influencerProfile", JSON.stringify(formData));
-    navigate("/dashboard");
+    localStorage.setItem("investorProfile", JSON.stringify(formData));
+    navigate("/dashboard/investor");
   };
 
   const handleSkip = () => {
-    // allow skipping onboarding and go to dashboard
-    navigate("/dashboard");
+    navigate("/dashboard/investor");
   };
 
   return (
@@ -57,22 +75,19 @@ export default function InfluencerOnboarding() {
       style={{ backgroundImage: `url(${bg})` }}
     >
       <div className="mx-auto w-full max-w-6xl">
-
-        {/* Combined Card: left steps + right image */}
         <div className="mx-auto w-full bg-white rounded-2xl shadow-2xl p-4 md:p-8 text-black grid grid-cols-1 md:grid-cols-2 overflow-hidden items-center">
 
-          {/* Left: steps column */}
           <div className="p-4 md:p-8">
             <div className="mb-6">
               <StepIndicator currentStep={step} />
             </div>
 
-            {step === 1 && <StepBasic data={formData} setData={setFormData} />}
-            {step === 2 && <StepSocial data={formData} setData={setFormData} />}
-            {step === 3 && <StepAudience data={formData} setData={setFormData} />}
-            {step === 4 && <StepBrands data={formData} setData={setFormData} />}
-            {step === 5 && <StepContent data={formData} setData={setFormData} />}
-            {step === 6 && <StepPricing data={formData} setData={setFormData} />}
+            {step === 1 && <StepIdentity data={formData} setData={setFormData} />}
+            {step === 2 && <StepFocus data={formData} setData={setFormData} />}
+            {step === 3 && <StepPitch data={formData} setData={setFormData} />}
+            {step === 4 && <StepAIBehavior data={formData} setData={setFormData} />}
+            {step === 5 && <StepMeetings data={formData} setData={setFormData} />}
+            {step === 6 && <StepGuidance data={formData} setData={setFormData} />}
 
             <div className="flex items-center justify-between mt-8 pt-4 border-t border-gray-200">
               <div className="flex items-center space-x-3">
@@ -102,9 +117,8 @@ export default function InfluencerOnboarding() {
             </div>
           </div>
 
-          {/* Right: image column */}
           <div className="hidden md:flex items-center justify-center p-6 bg-white">
-            <img src={roleImg} alt="Onboarding" className="w-full max-w-md object-contain rounded-xl shadow-lg" />
+            <img src={roleImg} alt="Investor" className="w-full max-w-md object-contain rounded-xl shadow-lg" />
           </div>
 
         </div>

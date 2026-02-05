@@ -12,19 +12,19 @@ export default function StepPricing({ data, setData }) {
   };
 
   return (
-    <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 md:p-8">
+    <div className="bg-white border border-gray-200 rounded-xl p-6 md:p-8 shadow-sm">
 
       {/* TITLE */}
-      <h2 className="text-2xl md:text-3xl font-bold text-white">
+      <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
         Pricing & Deals
       </h2>
-      <p className="mt-2 text-gray-400 text-sm md:text-base">
+      <p className="mt-2 text-gray-500 text-sm md:text-base">
         Set your collaboration pricing preferences
       </p>
 
       {/* BARTER DEAL */}
       <div className="mt-6">
-        <p className="text-sm text-gray-300 mb-3">
+        <p className="text-sm text-gray-600 mb-3">
           Are you open for barter deals?
         </p>
 
@@ -32,10 +32,10 @@ export default function StepPricing({ data, setData }) {
           <button
             type="button"
             onClick={() => updatePricing("barter", "yes")}
-            className={`flex-1 py-3 rounded-lg border transition ${
+            className={`flex-1 py-2.5 rounded-lg border transition font-medium ${
               pricing.barter === "yes"
-                ? "border-green-400 bg-green-400/10 text-green-400"
-                : "border-white/20 text-gray-300 hover:bg-white/5"
+                ? "border-indigo-600 bg-indigo-50 text-indigo-700"
+                : "border-gray-300 text-gray-600 hover:bg-gray-50"
             }`}
           >
             Yes
@@ -44,10 +44,10 @@ export default function StepPricing({ data, setData }) {
           <button
             type="button"
             onClick={() => updatePricing("barter", "no")}
-            className={`flex-1 py-3 rounded-lg border transition ${
+            className={`flex-1 py-2.5 rounded-lg border transition font-medium ${
               pricing.barter === "no"
-                ? "border-green-400 bg-green-400/10 text-green-400"
-                : "border-white/20 text-gray-300 hover:bg-white/5"
+                ? "border-indigo-600 bg-indigo-50 text-indigo-700"
+                : "border-gray-300 text-gray-600 hover:bg-gray-50"
             }`}
           >
             No
@@ -60,34 +60,44 @@ export default function StepPricing({ data, setData }) {
 
         {/* WITHOUT EDITING */}
         <div>
-          <label className="block text-sm text-gray-300 mb-2">
+          <label className="block text-sm text-gray-600 mb-2">
             Price for 30 sec Reel (without editing)
           </label>
-          <input
-            type="number"
-            placeholder="e.g. 5000"
-            value={pricing.reel30NoEdit || ""}
-            onChange={(e) =>
-              updatePricing("reel30NoEdit", e.target.value)
-            }
-            className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg outline-none text-white"
-          />
+          <div className="relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
+              ₹
+            </span>
+            <input
+              type="number"
+              placeholder="5000"
+              value={pricing.reel30NoEdit || ""}
+              onChange={(e) =>
+                updatePricing("reel30NoEdit", e.target.value)
+              }
+              className="w-full pl-8 px-4 py-3 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+          </div>
         </div>
 
         {/* WITH EDITING */}
         <div>
-          <label className="block text-sm text-gray-300 mb-2">
+          <label className="block text-sm text-gray-600 mb-2">
             Price for 30 sec Reel (with editing)
           </label>
-          <input
-            type="number"
-            placeholder="e.g. 8000"
-            value={pricing.reel30WithEdit || ""}
-            onChange={(e) =>
-              updatePricing("reel30WithEdit", e.target.value)
-            }
-            className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg outline-none text-white"
-          />
+          <div className="relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
+              ₹
+            </span>
+            <input
+              type="number"
+              placeholder="8000"
+              value={pricing.reel30WithEdit || ""}
+              onChange={(e) =>
+                updatePricing("reel30WithEdit", e.target.value)
+              }
+              className="w-full pl-8 px-4 py-3 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+          </div>
         </div>
 
       </div>

@@ -1,4 +1,4 @@
-import Navbar from "../components/Navbar";
+import Navbar from "../components/NavbarSaas";
 import wave from "../assets/dot-wave.png";
 
 export default function MainLayout({ children }) {
