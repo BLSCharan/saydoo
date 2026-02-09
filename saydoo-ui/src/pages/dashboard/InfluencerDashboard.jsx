@@ -1,27 +1,40 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Edit2, MessageSquare, CheckCircle, Bell, ChevronRight, MessageCircle, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export default function InfluencerDashboard() {
-  const [profile, setProfile] = useState(null);
   const [activeTab, setActiveTab] = useState("profile");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const data = localStorage.getItem("influencerProfile");
-    if (data) setProfile(JSON.parse(data));
-  }, []);
-
-  if (!profile) {
-    return (
-      <div className="min-h-screen flex items-center justify-center text-gray-700 bg-gradient-to-br from-gray-50 to-gray-100">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          Loading dashboard...
-        </div>
-      </div>
-    );
-  }
+  // Dummy profile data
+  const profile = {
+    basicProfile: {
+      fullName: "Sarah Anderson",
+      niche: "Fashion & Lifestyle",
+      language: "English",
+      openToCollab: "yes",
+    },
+    social: {
+      instagram: "sarahAnderson",
+      facebook: "Sarah Anderson",
+      twitter: "sarahAnderson",
+      linkedin: "sarahAnderson",
+    },
+    audience: {
+      ageGroup: "18-34",
+      female: 65,
+      male: 35,
+      geography: "USA & Canada",
+    },
+    pricing: {
+      barter: true,
+      reel30NoEdit: "500",
+      reel30WithEdit: "800",
+    },
+    brands: {
+      brandNames: ["Nike", "L'Oreal", "TechGadgets", "Bliss Resorts"],
+    },
+  };
 
   const getUserInitials = () => {
     const name = profile.basicProfile?.fullName || "Creator";

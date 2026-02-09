@@ -3,21 +3,36 @@ import { Edit2, CheckCircle, Bell, ChevronRight, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export default function FounderDashboard() {
-  const [profile, setProfile] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const raw = localStorage.getItem("founderProfile");
-    if (raw) setProfile(JSON.parse(raw));
-  }, []);
-
-  if (!profile) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100">
-        <div className="text-center text-gray-700">No founder profile saved yet.</div>
-      </div>
-    );
-  }
+  // Dummy profile data
+  const profile = {
+    founderIdentity: {
+      name: "Alex Johnson",
+      role: "CEO & Co-founder",
+      location: "New York, NY",
+    },
+    ventureOverview: {
+      name: "TechVenture AI",
+      industry: "Artificial Intelligence",
+      stage: "Series A",
+    },
+    businessModel: {
+      model: "B2B SaaS",
+      traction: "$500K ARR",
+    },
+    fundraising: {
+      raising: "Series A",
+      stage: "Active",
+      targetAmount: "$5M",
+    },
+    onboarding: [
+      { title: "Founder Identity", status: "Completed", updatedAt: "3 days ago", optional: false },
+      { title: "Venture Overview", status: "Completed", updatedAt: "2 days ago", optional: false },
+      { title: "Business Model", status: "Completed", updatedAt: "1 day ago", optional: false },
+      { title: "Fundraising Details", status: "In Progress", updatedAt: "Just now", optional: true },
+    ],
+  };
 
   const initials = (profile.founderIdentity?.name || "F").split(" ").map(n=>n[0]).join("").toUpperCase();
 

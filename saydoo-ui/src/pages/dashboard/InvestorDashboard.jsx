@@ -3,29 +3,40 @@ import { MessageSquare, CheckCircle, Bell, ChevronRight, LogOut } from "lucide-r
 import { useNavigate } from "react-router-dom";
 
 export default function InvestorDashboard() {
-  const [profile, setProfile] = useState(null);
   const navigate = useNavigate();
+
+  // Dummy profile data
+  const profile = {
+    identity: {
+      name: "Michael Chen",
+      type: "VC Partner",
+      location: "San Francisco, CA",
+    },
+    focus: {
+      industries: ["SaaS", "AI/ML", "FinTech"],
+      stage: "Seed to Series A",
+      ticketRange: "$500K - $2M",
+      geography: "North America",
+    },
+    pitch: {
+      allowedFormats: ["Deck", "Video", "Executive Summary"],
+      evaluationFactors: ["Market Size", "Team Strength", "Product-Market Fit"],
+    },
+    onboarding: [
+      { title: "Identity & Profile", status: "Completed", updatedAt: "2 days ago", optional: false },
+      { title: "Investment Focus", status: "Completed", updatedAt: "2 days ago", optional: false },
+      { title: "Pitch Preferences", status: "Completed", updatedAt: "1 day ago", optional: false },
+      { title: "AI Behavior", status: "In Progress", updatedAt: "Just now", optional: true },
+    ],
+  };
+
+  const initials = (profile.identity?.name || "I").split(" ").map(n=>n[0]).join("").toUpperCase();
 
   const handleEditStep = (idx) => {
     // navigate to the investor onboarding page and include a hash for the step
     // the onboarding page can read location.hash to scroll to the step element
     navigate(`/onboarding/investor#step-${idx}`);
   };
-
-  useEffect(() => {
-    const raw = localStorage.getItem("investorProfile");
-    if (raw) setProfile(JSON.parse(raw));
-  }, []);
-
-  if (!profile) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100">
-        <div className="text-center text-gray-700">No investor profile saved yet.</div>
-      </div>
-    );
-  }
-
-  const initials = (profile.identity?.name || "I").split(" ").map(n=>n[0]).join("").toUpperCase();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">
