@@ -3,8 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-import hero1 from "../assets/carousel-1.jpg";
-import hero2 from "../assets/carousel-2.jpg";
+import hero1 from "../assets/h1.png";
+import hero2 from "../assets/h2.png";
 
 const slides = [
   {

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { authAPI, setToken, setUserRole } from "../services/api";
 import roleImg from "../assets/login-f.jpg";
 import bg from "../assets/bg-role.png";
 
@@ -7,6 +8,8 @@ export default function FounderLogin() {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [signupData, setSignupData] = useState({
@@ -17,21 +20,52 @@ export default function FounderLogin() {
 
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e?.preventDefault?.();
-    console.log("founder login", loginData);
+    setError("");
+    setLoading(true);
+
+    try {
+      const response = await authAPI.founderLogin(loginData.email, loginData.password);
+      if (response.token) {
+        setToken(response.token);
+        setUserRole("founder");
+        navigate("/dashboard/founder");
+      }
+    } catch (err) {
+      setError(err.message || "Login failed");
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e?.preventDefault?.();
-    console.log("founder signup", signupData);
-    navigate("/onboarding/founder");
+    setError("");
+
+    if (signupData.password !== signupData.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await authAPI.founderSignup(signupData.email, signupData.password);
+      if (response.token) {
+        setToken(response.token);
+        setUserRole("founder");
+        navigate("/onboarding/founder");
+      }
+    } catch (err) {
+      setError(err.message || "Signup failed");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleLoginAndRedirect = (e) => {
-    e?.preventDefault?.();
-    console.log("founder login and redirect", loginData);
-    navigate("/dashboard/founder");
+    handleLogin(e);
   };
 
   return (
@@ -42,6 +76,13 @@ export default function FounderLogin() {
       <div className="w-full max-w-4xl bg-white shadow-2xl rounded-2xl grid md:grid-cols-2 overflow-hidden">
         {/* Left Column - Form */}
         <div className="p-8 flex flex-col justify-center">
+        {/* Error Alert */}
+        {error && (
+          <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg text-sm">
+            {error}
+          </div>
+        )}
+
         {/* Toggle Buttons */}
         <div className="flex mb-6 bg-gray-100 rounded-full p-1">
           <button
@@ -186,9 +227,10 @@ export default function FounderLogin() {
         {/* Login/Signup Button */}
         <button
           onClick={isLogin ? handleLoginAndRedirect : handleSignup}
-          className="w-full py-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition mb-4 text-sm"
+          disabled={loading}
+          className="w-full py-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-400 text-white font-semibold transition mb-4 text-sm"
         >
-          {isLogin ? "Log In" : "Sign Up"}
+          {loading ? "Processing..." : isLogin ? "Log In" : "Sign Up"}
         </button>
 
         {/* Divider */}

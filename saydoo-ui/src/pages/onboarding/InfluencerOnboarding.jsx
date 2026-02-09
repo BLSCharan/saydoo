@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { onboardingAPI } from "../../services/api";
 
 import StepIndicator from "./StepIndicator";
 import StepBasic from "./steps/StepBasic";
@@ -13,6 +14,8 @@ import bg from "../../assets/bg-role.png";
 
 export default function InfluencerOnboarding() {
   const [step, setStep] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const scrollRef = useRef(null);
   const navigate = useNavigate();
 
@@ -40,9 +43,18 @@ export default function InfluencerOnboarding() {
     }
   }, [step]);
 
-  const handleFinish = () => {
-    localStorage.setItem("influencerProfile", JSON.stringify(formData));
-    navigate("/dashboard");
+  const handleFinish = async () => {
+    setLoading(true);
+    setError("");
+
+    try {
+      await onboardingAPI.submitInfluencerOnboarding(formData);
+      navigate("/dashboard");
+    } catch (err) {
+      setError(err.message || "Failed to submit onboarding");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSkip = () => {
@@ -66,6 +78,12 @@ export default function InfluencerOnboarding() {
             <div className="mb-6">
               <StepIndicator currentStep={step} />
             </div>
+
+            {error && (
+              <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg text-sm">
+                {error}
+              </div>
+            )}
 
             {step === 1 && <StepBasic data={formData} setData={setFormData} />}
             {step === 2 && <StepSocial data={formData} setData={setFormData} />}
@@ -95,9 +113,10 @@ export default function InfluencerOnboarding() {
 
               <button
                 onClick={step === 6 ? handleFinish : next}
-                className="px-6 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition"
+                disabled={loading && step === 6}
+                className="px-6 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-400 text-white font-medium transition"
               >
-                {step === 6 ? "Finish" : "Next"}
+                {loading && step === 6 ? "Submitting..." : step === 6 ? "Finish" : "Next"}
               </button>
             </div>
           </div>

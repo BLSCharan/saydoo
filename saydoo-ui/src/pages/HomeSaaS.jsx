@@ -1,6 +1,7 @@
 import NavbarSaaS from "../components/NavbarSaas";
 
 import Hero from "../components/Hero";
+import ScrollingCards from "../sections/ScrollingCards";
 import About from "../sections/About";
 import Services from "../sections/Services";
 import Carousel from "../sections/Carousel";
@@ -18,6 +19,9 @@ export default function Home() {
 
       {/* HERO SECTION */}
       <Hero />
+
+      {/* SCROLLING CARDS SECTION */}
+      <ScrollingCards />
 
       {/* ABOUT SECTION */}
       <About />

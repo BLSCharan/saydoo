@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { authAPI, setToken, setUserRole } from "../services/api";
 import roleImg from "../assets/login-i.jpg";
 import bg from "../assets/bg-role.png";
 
@@ -7,6 +8,8 @@ export default function InvestorLogin() {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [signupData, setSignupData] = useState({
@@ -15,24 +18,54 @@ export default function InvestorLogin() {
     confirmPassword: "",
   });
 
-  const handleLogin = (e) => {
-    e?.preventDefault?.();
-    console.log("investor login", loginData);
-  };
-
-  const handleSignup = (e) => {
-    e?.preventDefault?.();
-    console.log("investor signup", signupData);
-    // redirect to investor onboarding
-    navigate("/onboarding/investor");
-  };
-
   const navigate = useNavigate();
 
-  const handleLoginAndRedirect = (e) => {
+  const handleLogin = async (e) => {
     e?.preventDefault?.();
-    console.log("investor login and redirect", loginData);
-    navigate("/dashboard/investor");
+    setError("");
+    setLoading(true);
+
+    try {
+      const response = await authAPI.investorLogin(loginData.email, loginData.password);
+      if (response.token) {
+        setToken(response.token);
+        setUserRole("investor");
+        navigate("/dashboard/investor");
+      }
+    } catch (err) {
+      setError(err.message || "Login failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSignup = async (e) => {
+    e?.preventDefault?.();
+    setError("");
+
+    if (signupData.password !== signupData.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await authAPI.investorSignup(signupData.email, signupData.password);
+      if (response.token) {
+        setToken(response.token);
+        setUserRole("investor");
+        navigate("/onboarding/investor");
+      }
+    } catch (err) {
+      setError(err.message || "Signup failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLoginAndRedirect = (e) => {
+    handleLogin(e);
   };
 
   return (
@@ -43,6 +76,13 @@ export default function InvestorLogin() {
       <div className="w-full max-w-4xl bg-white shadow-2xl rounded-2xl grid md:grid-cols-2 overflow-hidden">
         {/* Left Column - Form */}
         <div className="p-8 flex flex-col justify-center">
+        {/* Error Alert */}
+        {error && (
+          <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg text-sm">
+            {error}
+          </div>
+        )}
+
         {/* Toggle Buttons */}
         <div className="flex mb-6 bg-gray-100 rounded-full p-1">
           <button
@@ -187,9 +227,10 @@ export default function InvestorLogin() {
         {/* Login/Signup Button */}
         <button
           onClick={isLogin ? handleLoginAndRedirect : handleSignup}
-          className="w-full py-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition mb-4 text-sm"
+          disabled={loading}
+          className="w-full py-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-400 text-white font-semibold transition mb-4 text-sm"
         >
-          {isLogin ? "Log In" : "Sign Up"}
+          {loading ? "Processing..." : isLogin ? "Log In" : "Sign Up"}
         </button>
 
         {/* Divider */}
