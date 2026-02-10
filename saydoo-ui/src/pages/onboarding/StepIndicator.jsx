@@ -4,7 +4,6 @@ export default function StepIndicator({ currentStep }) {
     "Social",
     "Audience",
     "Brands",
-    "Content",
     "Pricing"
   ];
 

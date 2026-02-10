@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Edit2, MessageSquare, CheckCircle, Bell, ChevronRight, MessageCircle, LogOut } from "lucide-react";
+import { Edit2, MessageSquare, CheckCircle, Bell, ChevronRight, MessageCircle, LogOut, Menu, X, Link2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export default function InfluencerDashboard() {
   const [activeTab, setActiveTab] = useState("profile");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   // Dummy profile data
@@ -54,9 +55,9 @@ export default function InfluencerDashboard() {
             <span className="text-2xl font-bold text-gray-900">Saydoo</span>
           </div>
 
-          {/* Nav Items */}
+          {/* Nav Items - Desktop */}
           <div className="hidden md:flex items-center gap-8">
-            <button className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition">
+            <button onClick={() => navigate('/my-links')} className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition cursor-pointer">
               <MessageSquare size={18} />
               My Link
             </button>
@@ -74,12 +75,38 @@ export default function InfluencerDashboard() {
             </button>
           </div>
 
-          {/* Mobile Menu */}
+          {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center gap-4">
             <Bell size={20} className="text-gray-700 cursor-pointer" />
-            <button className="text-gray-700 hover:text-blue-600">Menu</button>
+            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="text-gray-700 hover:text-blue-600">
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
           </div>
         </div>
+
+        {/* Mobile Menu Dropdown */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-white border-t border-gray-100 shadow-lg">
+            <div className="px-4 py-4 space-y-3">
+              <button onClick={() => { navigate('/my-links'); setMobileMenuOpen(false); }} className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition cursor-pointer w-full py-2 px-3 rounded-lg hover:bg-gray-50">
+                <MessageSquare size={18} />
+                My Link
+              </button>
+              <button className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition w-full py-2 px-3 rounded-lg hover:bg-gray-50">
+                <Edit2 size={18} />
+                Prev Profile
+              </button>
+              <button className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition w-full py-2 px-3 rounded-lg hover:bg-gray-50">
+                <Bell size={18} />
+                Notifications
+              </button>
+              <button onClick={() => { navigate('/roles'); setMobileMenuOpen(false); }} className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition w-full py-2 px-3 rounded-lg hover:bg-gray-50">
+                <LogOut size={18} />
+                Logout
+              </button>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* ===== MAIN CONTENT ===== */}
@@ -117,7 +144,15 @@ export default function InfluencerDashboard() {
         </div>
 
         {/* ===== QUICK ACTION CARDS ===== */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+          <button onClick={() => navigate('/my-links')} className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 p-6 text-center group cursor-pointer border border-gray-100 hover:border-blue-200">
+            <div className="text-4xl mb-3 flex justify-center group-hover:scale-110 transition-transform">
+              🔗
+            </div>
+            <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition">My Link</h3>
+            <p className="text-sm text-gray-600 mt-1">All Links</p>
+          </button>
+
           <button className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 p-6 text-center group cursor-pointer border border-gray-100 hover:border-blue-200">
             <div className="text-4xl mb-3 flex justify-center group-hover:scale-110 transition-transform">
               ✏️

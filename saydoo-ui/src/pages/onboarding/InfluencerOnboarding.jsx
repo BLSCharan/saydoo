@@ -7,7 +7,6 @@ import StepBasic from "./steps/StepBasic";
 import StepSocial from "./steps/StepSocial";
 import StepAudience from "./steps/StepAudience";
 import StepBrands from "./steps/StepBrands";
-import StepContent from "./steps/StepContent";
 import StepPricing from "./steps/StepPricing";
 import roleImg from "../../assets/login-role.jpg";
 import bg from "../../assets/bg-role.png";
@@ -33,7 +32,7 @@ export default function InfluencerOnboarding() {
     pricing: {},
   });
 
-  const next = () => setStep((s) => Math.min(s + 1, 6));
+  const next = () => setStep((s) => Math.min(s + 1, 5));
   const back = () => setStep((s) => Math.max(s - 1, 1));
 
   // Reset scroll on step change
@@ -89,8 +88,7 @@ export default function InfluencerOnboarding() {
             {step === 2 && <StepSocial data={formData} setData={setFormData} />}
             {step === 3 && <StepAudience data={formData} setData={setFormData} />}
             {step === 4 && <StepBrands data={formData} setData={setFormData} />}
-            {step === 5 && <StepContent data={formData} setData={setFormData} />}
-            {step === 6 && <StepPricing data={formData} setData={setFormData} />}
+            {step === 5 && <StepPricing data={formData} setData={setFormData} />}
 
             <div className="flex items-center justify-between mt-8 pt-4 border-t border-gray-200">
               <div className="flex items-center space-x-3">
@@ -112,11 +110,11 @@ export default function InfluencerOnboarding() {
               </div>
 
               <button
-                onClick={step === 6 ? handleFinish : next}
-                disabled={loading && step === 6}
+                onClick={step === 5 ? handleFinish : next}
+                disabled={loading && step === 5}
                 className="px-6 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-400 text-white font-medium transition"
               >
-                {loading && step === 6 ? "Submitting..." : step === 6 ? "Finish" : "Next"}
+                {loading && step === 5 ? "Submitting..." : step === 5 ? "Finish" : "Next"}
               </button>
             </div>
           </div>

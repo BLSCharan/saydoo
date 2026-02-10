@@ -10,7 +10,7 @@ const slides = [
   {
     image: hero1,
     badge: "Welcome to SayDoo",
-    title: "Your Personal AI Assistant",
+    title: "Your Personal Assistant",
     cta: "Create your AI Clone now",
   },
   {

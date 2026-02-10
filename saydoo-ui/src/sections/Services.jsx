@@ -43,7 +43,7 @@ export default function Services() {
           .card-hover { transition: all 0.3s ease; }
           .card-hover:hover { background-color: #3f63f2; color: white; border-color: #3f63f2; }
           .card-hover:hover h4, .card-hover:hover p { color: white; }
-          .card-hover:hover .check-icon { background-color: rgba(255, 255, 255, 0.2); }
+          .card-hover:hover .check-icon { background-color: white; color: #3f63f2; }
         `}</style>
 
         <div className="grid lg:grid-cols-2 gap-16 items-center">

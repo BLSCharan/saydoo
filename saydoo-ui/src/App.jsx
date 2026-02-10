@@ -12,6 +12,7 @@ import FounderOnboarding from "./pages/onboarding/FounderOnboarding";
 import InfluencerDashboard from "./pages/dashboard/InfluencerDashboard";
 import InvestorDashboard from "./pages/dashboard/InvestorDashboard";
 import FounderDashboard from "./pages/dashboard/FounderDashboard";
+import MyLinks from "./pages/dashboard/MyLinks";
 
 export default function App() {
   return (
@@ -28,6 +29,7 @@ export default function App() {
         <Route path="/onboarding/investor" element={<InvestorOnboarding />} />
         <Route path="/onboarding/founder" element={<FounderOnboarding />} />
         <Route path="/dashboard" element={<InfluencerDashboard />} />
+        <Route path="/my-links" element={<MyLinks />} />
         <Route path="/dashboard/investor" element={<InvestorDashboard />} />
         <Route path="/dashboard/founder" element={<FounderDashboard />} />
       </Routes>

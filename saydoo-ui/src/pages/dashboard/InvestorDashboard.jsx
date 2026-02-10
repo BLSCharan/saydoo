@@ -22,12 +22,29 @@ export default function InvestorDashboard() {
       allowedFormats: ["Deck", "Video", "Executive Summary"],
       evaluationFactors: ["Market Size", "Team Strength", "Product-Market Fit"],
     },
-    onboarding: [
-      { title: "Identity & Profile", status: "Completed", updatedAt: "2 days ago", optional: false },
-      { title: "Investment Focus", status: "Completed", updatedAt: "2 days ago", optional: false },
-      { title: "Pitch Preferences", status: "Completed", updatedAt: "1 day ago", optional: false },
-      { title: "AI Behavior", status: "In Progress", updatedAt: "Just now", optional: true },
-    ],
+      onboarding: [
+        { title: "Identity & Profile", status: "Completed", updatedAt: "2 days ago", optional: false },
+        { title: "Investment Focus", status: "Completed", updatedAt: "2 days ago", optional: false },
+        { title: "Pitch Preferences", status: "Completed", updatedAt: "1 day ago", optional: false },
+        { title: "AI Behavior", status: "In Progress", updatedAt: "Just now", optional: true },
+        { title: "AI Behavior", status: "Completed", updatedAt: "1 day ago", optional: true },
+        { title: "Meetings Preferences", status: "Completed", updatedAt: "1 day ago", optional: false },
+        { title: "Guidance Notes", status: "Completed", updatedAt: "Just now", optional: false },
+      ],
+      aiBehavior: {
+        autoFilter: true,
+        followUpQuestions: true,
+        summaryFormat: "text",
+      },
+      meetings: {
+        allowMeetings: true,
+        types: ["15", "30"],
+        paid: false,
+      },
+      guidance: {
+        exciteNote: "Looking for founders solving real problems with data-driven insights. Deep tech & climate tech opportunities especially welcome.",
+        avoidNote: "Please avoid pitches without clear business models or unrealistic projections. Follow-ons should include detailed traction metrics.",
+      },
   };
 
   const initials = (profile.identity?.name || "I").split(" ").map(n=>n[0]).join("").toUpperCase();

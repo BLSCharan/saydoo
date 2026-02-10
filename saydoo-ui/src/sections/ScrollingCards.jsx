@@ -107,12 +107,9 @@ export default function ScrollingCards() {
 				{/* Header */}
 				<div className="text-center mb-16 mx-auto max-w-7xl">
 					<h2 className="text-3xl md:text-5xl font-bold text-blue-600 mb-4">
-						Powerful Features
+						Where creators thrive and brands trust
 					</h2>
-					<p className="text-gray-600 text-lg max-w-2xl mx-auto">
-						Experience the next generation of AI assistance with cutting-edge
-						features
-					</p>
+					
 				</div>
 
 				{/* Row 1 - Scrolls Right */}
