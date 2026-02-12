@@ -10,7 +10,7 @@ import zara from "../../assets/brands/zara.png";
 import hm from "../../assets/brands/hm.png";
 import uspolo from "../../assets/brands/uspolo.jpg";
 import youtube from "../../assets/brands/youtube.png";
-import netflix from "../../assets/brands/netflix.jpg";
+import netflix from "../../assets/brands/netflix.png";
 
 export default function MyLinks() {
   const navigate = useNavigate();
@@ -39,20 +39,28 @@ export default function MyLinks() {
 
   /* ✅ AUTO SCROLL */
   useEffect(() => {
-    const el = carouselRef.current;
-    if (!el) return;
-
     const interval = setInterval(() => {
-      el.scrollBy({
-        left: 140,
-        behavior: "smooth",
-      });
-
       setCurrentIndex((prev) => (prev + 1) % baseOffers.length);
     }, 2200);
 
     return () => clearInterval(interval);
   }, []);
+
+  /* ✅ SCROLL TO INDEX */
+  useEffect(() => {
+    const el = carouselRef.current;
+    if (!el) return;
+
+    el.scrollBy({
+      left: 140,
+      behavior: "smooth",
+    });
+  }, [currentIndex]);
+
+  /* ✅ HANDLE DOT CLICK */
+  const handleDotClick = (index) => {
+    setCurrentIndex(index);
+  };
 
   return (
     <div className="min-h-screen bg-neutral-900 flex justify-center pb-10 px-4">
@@ -110,7 +118,11 @@ export default function MyLinks() {
 
           <div
             ref={carouselRef}
-            className="flex gap-4 overflow-x-auto no-scrollbar"
+            className="flex gap-4 overflow-x-auto"
+            style={{
+              scrollbarWidth: "none",
+              msOverflowStyle: "none",
+            }}
           >
             {offers.map((logo, i) => (
               <div
@@ -138,9 +150,26 @@ export default function MyLinks() {
                   max-w-[75%]
                   max-h-[70%]
                   object-contain
+                  pointer-events-none
                   "
                 />
               </div>
+            ))}
+          </div>
+
+          {/* DOT INDICATORS */}
+          <div className="flex justify-center gap-2 mt-4">
+            {baseOffers.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => handleDotClick(index)}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  index === currentIndex % baseOffers.length
+                    ? "bg-white w-6"
+                    : "bg-neutral-600 w-2"
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
             ))}
           </div>
         </div>

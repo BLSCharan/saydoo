@@ -29,15 +29,13 @@ body {
   background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
   color: white;
 }
-@keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
+
+/* Hide scrollbars while keeping scroll functionality */
+div::-webkit-scrollbar {
+  display: none;
 }
 
-.animate-marquee {
-  animation: marquee 18s linear infinite;
+div {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
