@@ -79,6 +79,13 @@ export default function Navbar() {
           <button onClick={() => scrollTo('contact')} className="hover:text-indigo-600">
             Contact
           </button>
+
+          <button 
+            onClick={() => navigate("/roles")}
+            className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
+          >
+            Login
+          </button>
         </div>
 
         {/* MOBILE BUTTON */}
@@ -109,6 +116,13 @@ export default function Navbar() {
           </div>
 
           <button onClick={() => scrollTo('contact')} className="block w-full text-left text-black">Contact</button>
+
+          <button 
+            onClick={() => { setOpen(false); navigate("/roles"); }}
+            className="block w-full text-left px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-medium"
+          >
+            Login
+          </button>
         </div>
       )}
     </nav>

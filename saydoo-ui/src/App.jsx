@@ -13,6 +13,8 @@ import InfluencerDashboard from "./pages/dashboard/InfluencerDashboard";
 import InvestorDashboard from "./pages/dashboard/InvestorDashboard";
 import FounderDashboard from "./pages/dashboard/FounderDashboard";
 import MyLinks from "./pages/dashboard/MyLinks";
+import AdminDashboard from './pages/dashboard/AdminDashboard';
+import ManageUsers from './pages/dashboard/ManageUsers';
 
 export default function App() {
   return (
@@ -32,6 +34,9 @@ export default function App() {
         <Route path="/my-links" element={<MyLinks />} />
         <Route path="/dashboard/investor" element={<InvestorDashboard />} />
         <Route path="/dashboard/founder" element={<FounderDashboard />} />
+        <Route path="/dashboard/admin" element={<AdminDashboard />} />
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin/users" element={<ManageUsers />} />
       </Routes>
     </BrowserRouter>
   );

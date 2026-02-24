@@ -165,7 +165,7 @@ export default function InfluencerDashboard() {
             <div className="text-4xl mb-3 flex justify-center group-hover:scale-110 transition-transform">
               🤖
             </div>
-            <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition">Add More</h3>
+            <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition">Chat with me</h3>
             <p className="text-sm text-gray-600 mt-1">AI Questions & Answers</p>
           </button>
 
