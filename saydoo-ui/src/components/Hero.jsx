@@ -14,6 +14,29 @@ const features = [
   { id: 8, icon: Shield, title: "Easy Investors", position: "right" },
 ];
 
+const headerContainerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const headerItemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: "easeOut",
+    },
+  },
+};
+
 export default function Hero() {
   const [scrollY, setScrollY] = useState(0);
   const containerRef = useRef(null);
@@ -38,22 +61,33 @@ export default function Hero() {
       ref={containerRef}
       className="relative w-full min-h-screen py-12 md:py-20 overflow-hidden bg-gradient-to-br from-blue-50 via-white to-blue-50"
     >
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full overflow-x-hidden">
 
         {/* HEADER */}
-        <div className="text-center mb-12 md:mb-20 pt-10">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+        <motion.div 
+          className="text-center mb-12 md:mb-20 pt-10"
+          variants={headerContainerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <motion.h1 
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6"
+            variants={headerItemVariants}
+          >
             <span className="text-gray-900">AI Clones for </span>
             <span className="text-blue-600">Founders, Creators,</span>
             <br className="hidden sm:block" />
             <span className="text-blue-600">Investors</span>
             <span className="text-gray-900"> and Businesses</span>
-          </h1>
+          </motion.h1>
 
-          <p className="text-gray-700 text-base sm:text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
+          <motion.p 
+            className="text-gray-700 text-base sm:text-lg md:text-xl max-w-3xl mx-auto leading-relaxed"
+            variants={headerItemVariants}
+          >
             Automate DMs, operations and workflows with AI that understands your business, and works 24/7.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
       {/* ================= DESKTOP VIEW ================= */}
 <div className="hidden lg:grid lg:grid-cols-12 lg:gap-12 lg:items-center">

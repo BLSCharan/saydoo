@@ -23,8 +23,8 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="fixed top-0 w-full bg-white shadow z-50">
-      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+    <nav className="fixed top-0 w-full bg-white shadow z-50 overflow-x-hidden">
+      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
 
         {/* LOGO */}
         <h1
