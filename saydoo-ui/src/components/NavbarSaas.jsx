@@ -54,21 +54,22 @@ export default function Navbar() {
             onMouseEnter={() => setDropdown(true)}
             onMouseLeave={() => setDropdown(false)}
           >
-            <button className="flex items-center gap-1 hover:text-indigo-600">
-              Other Services <ChevronDown size={16} />
+            <button className="flex items-center gap-1 hover:text-indigo-600 transition">
+              Other Services <ChevronDown size={16} className={`transition-transform ${dropdown ? 'rotate-180' : ''}`} />
             </button>
 
             {dropdown && (
-              <div className="absolute top-full mt-2 w-48 bg-white border rounded-lg shadow-lg">
+              <div className="fixed left-auto right-auto top-20 w-48 bg-white border border-gray-200 rounded-lg shadow-xl z-50">
                 <button
-                  onClick={() => navigate("/custom-ai")}
-                  className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                  onClick={() => { setDropdown(false); navigate("/custom-ai"); }}
+                  className="block w-full text-left px-4 py-3 hover:bg-indigo-50 hover:text-indigo-600 transition first:rounded-t-lg text-gray-700"
                 >
                   Customized AI
                 </button>
+                <div className="border-t border-gray-100"></div>
                 <button
-                  onClick={() => navigate("/virtual-tours")}
-                  className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                  onClick={() => { setDropdown(false); navigate("/virtual-tours"); }}
+                  className="block w-full text-left px-4 py-3 hover:bg-indigo-50 hover:text-indigo-600 transition last:rounded-b-lg text-gray-700"
                 >
                   Virtual Tours
                 </button>

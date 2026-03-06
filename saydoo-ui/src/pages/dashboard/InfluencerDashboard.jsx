@@ -1,11 +1,48 @@
-import { useState } from "react";
-import { Edit2, MessageSquare, CheckCircle, Bell, ChevronRight, MessageCircle, LogOut, Menu, X, Link2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Edit2, MessageSquare, CheckCircle, Bell, ChevronRight, MessageCircle, LogOut, Menu, X, Link2, Upload, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export default function InfluencerDashboard() {
   const [activeTab, setActiveTab] = useState("profile");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [uploadedOffers, setUploadedOffers] = useState([]);
   const navigate = useNavigate();
+
+  // Load uploaded offers from localStorage on mount
+  useEffect(() => {
+    const saved = localStorage.getItem('uploadedOffers');
+    if (saved) {
+      setUploadedOffers(JSON.parse(saved));
+    }
+  }, []);
+
+  // Handle image upload
+  const handleOfferUpload = (e) => {
+    const files = e.target.files;
+    if (files) {
+      Array.from(files).forEach(file => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const newOffer = {
+            id: Date.now(),
+            src: reader.result,
+            name: file.name
+          };
+          const updated = [...uploadedOffers, newOffer];
+          setUploadedOffers(updated);
+          localStorage.setItem('uploadedOffers', JSON.stringify(updated));
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+  };
+
+  // Delete offer
+  const deleteOffer = (id) => {
+    const updated = uploadedOffers.filter(offer => offer.id !== id);
+    setUploadedOffers(updated);
+    localStorage.setItem('uploadedOffers', JSON.stringify(updated));
+  };
 
   // Dummy profile data
   const profile = {
@@ -346,6 +383,59 @@ export default function InfluencerDashboard() {
                 <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition-colors duration-200">
                   Edit Profile Information
                 </button>
+              </div>
+            </div>
+
+            {/* MANAGE OFFERS CARD */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+              <div className="bg-gradient-to-r from-green-50 to-emerald-50 px-6 py-4 border-b border-gray-100">
+                <h2 className="text-xl font-bold text-gray-900">Manage Offers & Brands</h2>
+              </div>
+              <div className="p-6">
+                {/* UPLOAD SECTION */}
+                <div className="mb-6">
+                  <label className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-8 cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition-colors">
+                    <Upload size={32} className="text-gray-400 mb-2" />
+                    <span className="text-gray-700 font-semibold">Click to upload brand images</span>
+                    <span className="text-gray-500 text-sm mt-1">PNG, JPG, or any image format</span>
+                    <input
+                      type="file"
+                      multiple
+                      accept="image/*"
+                      onChange={handleOfferUpload}
+                      className="hidden"
+                    />
+                  </label>
+                </div>
+
+                {/* UPLOADED IMAGES GRID */}
+                {uploadedOffers.length > 0 ? (
+                  <div>
+                    <p className="text-sm font-semibold text-gray-700 mb-3">Uploaded Offers ({uploadedOffers.length})</p>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                      {uploadedOffers.map((offer) => (
+                        <div key={offer.id} className="relative group">
+                          <div className="bg-gray-100 rounded-lg p-3 flex items-center justify-center h-24 overflow-hidden">
+                            <img src={offer.src} alt={offer.name} className="max-w-full max-h-full object-contain" />
+                          </div>
+                          <button
+                            onClick={() => deleteOffer(offer.id)}
+                            className="absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                            title="Delete"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                          <p className="text-xs text-gray-600 mt-1 truncate">{offer.name}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-center py-6 text-gray-500">
+                    <p>No offers uploaded yet</p>
+                    <p className="text-sm mt-1">Upload images to display in your My Links page</p>
+                  </div>
+                )}
               </div>
             </div>
 

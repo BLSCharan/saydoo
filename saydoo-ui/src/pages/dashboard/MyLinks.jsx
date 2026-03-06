@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Twitter, Twitch, Share2, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-/* ✅ LOCAL BRAND IMAGES */
+/* ✅ LOCAL BRAND IMAGES (FALLBACK) */
 import nike from "../../assets/brands/nike.png";
 import adidas from "../../assets/brands/adidas.png";
 import puma from "../../assets/brands/puma.png";
@@ -14,6 +14,25 @@ import netflix from "../../assets/brands/netflix.png";
 
 export default function MyLinks() {
   const navigate = useNavigate();
+  const [offers, setOffers] = useState([]);
+  const [baseOffers, setBaseOffers] = useState([]);
+
+  // Load offers from localStorage or use defaults
+  useEffect(() => {
+    const savedOffers = localStorage.getItem('uploadedOffers');
+    if (savedOffers && JSON.parse(savedOffers).length > 0) {
+      const parsed = JSON.parse(savedOffers);
+      const images = parsed.map(offer => offer.src);
+      setBaseOffers(images);
+      // Duplicate for infinite feel
+      setOffers([...images, ...images, ...images]);
+    } else {
+      // Use default offers if none uploaded
+      const defaultOffers = [nike, adidas, puma, zara, hm, uspolo, youtube, netflix];
+      setBaseOffers(defaultOffers);
+      setOffers([...defaultOffers, ...defaultOffers, ...defaultOffers]);
+    }
+  }, []);
 
   const profile = {
     name: "Gaurav Kumar",
@@ -28,26 +47,34 @@ export default function MyLinks() {
     ],
   };
 
-  /* ✅ LOCAL OFFERS */
-  const baseOffers = [nike, adidas, puma, zara, hm, uspolo, youtube, netflix];
-
-  /* Duplicate for infinite feel */
-  const offers = [...baseOffers, ...baseOffers, ...baseOffers];
-
   const carouselRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [centerCardIndex, setCenterCardIndex] = useState(0);
+
+  /* ✅ HANDLE CAROUSEL SCROLL - DETECT CENTER CARD */
+  const handleCarouselScroll = () => {
+    const el = carouselRef.current;
+    if (!el || baseOffers.length === 0) return;
+
+    const scrollLeft = el.scrollLeft;
+    const cardWidth = 144; // w-32 + gap-4 = 128px + 16px = 144px
+    const centerIndex = Math.round(scrollLeft / cardWidth) % baseOffers.length;
+    setCenterCardIndex(centerIndex);
+  };
 
   /* ✅ AUTO SCROLL */
   useEffect(() => {
+    if (baseOffers.length === 0) return;
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % baseOffers.length);
     }, 2200);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [baseOffers]);
 
   /* ✅ SCROLL TO INDEX */
   useEffect(() => {
+    if (baseOffers.length === 0) return;
     const el = carouselRef.current;
     if (!el) return;
 
@@ -55,7 +82,7 @@ export default function MyLinks() {
       left: 140,
       behavior: "smooth",
     });
-  }, [currentIndex]);
+  }, [currentIndex, baseOffers]);
 
   /* ✅ HANDLE DOT CLICK */
   const handleDotClick = (index) => {
@@ -112,6 +139,35 @@ export default function MyLinks() {
         {/* ⭐⭐⭐ PREMIUM BRAND CAROUSEL */}
         <div className="mt-8">
 
+          {/* BIG PREVIEW CARD */}
+          <div className="flex justify-center mb-6">
+            <div
+              className="
+                w-64
+                h-32
+                bg-white
+                rounded-3xl
+                flex
+                items-center
+                justify-center
+                shadow-xl
+                transition
+                duration-300
+              "
+            >
+              <img
+                src={baseOffers[centerCardIndex]}
+                alt="featured brand"
+                className="
+                max-w-[80%]
+                max-h-[80%]
+                object-contain
+                pointer-events-none
+                "
+              />
+            </div>
+          </div>
+
           <p className="text-neutral-300 text-sm mb-4 text-center">
             Offers From Brands On Us
           </p>
@@ -123,6 +179,7 @@ export default function MyLinks() {
               scrollbarWidth: "none",
               msOverflowStyle: "none",
             }}
+            onScroll={handleCarouselScroll}
           >
             {offers.map((logo, i) => (
               <div
@@ -179,7 +236,7 @@ export default function MyLinks() {
           onClick={() => navigate("/")}
           className="w-full mt-8 bg-white text-black font-semibold py-3 rounded-full shadow-md hover:scale-105 transition"
         >
-          Connect with me on Saydoo
+          Connect with Saydoo
         </button>
 
         <p className="text-neutral-500 text-xs text-center mt-4">

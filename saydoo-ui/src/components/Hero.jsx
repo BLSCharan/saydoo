@@ -135,12 +135,6 @@ export default function Hero() {
         </p>
       </div>
 
-      <div className="bg-white rounded-2xl p-5 mb-5">
-        <p className="text-gray-800 font-medium text-base">
-          How can I help today?
-        </p>
-      </div>
-
       <input
         type="text"
         placeholder="Type your message..."
@@ -205,12 +199,6 @@ export default function Hero() {
                   S
                 </div>
                 <p className="font-semibold text-gray-900">Hi! I am your Saydoo AI</p>
-              </div>
-
-              <div className="bg-white rounded-2xl p-4 mb-4">
-                <p className="text-gray-800 font-medium">
-                  How can I help today?
-                </p>
               </div>
 
               <input
